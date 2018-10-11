@@ -1,0 +1,61 @@
+plugins {
+    id 'java'
+    id 'application'
+    id "de.undercouch.download" version "3.4.3"
+}
+
+mainClassName = 'App'
+
+dependencies {
+    compile 'org.apache.commons:commons-lang3:3.8.1'
+    compile 'org.seleniumhq.selenium:selenium-java:3.14.0'
+
+    testCompile 'junit:junit:4.12'
+}
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+    jcenter()
+}
+
+// project specific tasks
+
+clean.doFirst {
+    println "cleaning extra directories ..."
+    file("drivers").deleteDir()
+}
+
+task downloadDrivers(type: Download) {
+    src ([  'https://github.com/mozilla/geckodriver/releases/download/v0.23.0/geckodriver-v0.23.0-win64.zip',
+            'https://github.com/mozilla/geckodriver/releases/download/v0.23.0/geckodriver-v0.23.0-linux64.tar.gz',
+            'https://github.com/mozilla/geckodriver/releases/download/v0.23.0/geckodriver-v0.23.0-macos.tar.gz',
+            'https://chromedriver.storage.googleapis.com/2.42/chromedriver_win32.zip',
+            'https://chromedriver.storage.googleapis.com/2.42/chromedriver_linux64.zip',
+            'https://chromedriver.storage.googleapis.com/2.42/chromedriver_mac64.zip'
+    ])
+    dest 'build/drivers'
+    overwrite false
+}
+
+
+task drivers {
+    dependsOn downloadDrivers
+    doLast{
+        fileTree(dir: 'build/drivers').include('*.tar.gz').each { myFile ->
+            copy {
+                println "Processing ${myFile.name}"
+                def name = myFile.name - '.tar.gz'
+                from tarTree("build/drivers/${myFile.name}")
+                into "drivers/${name}"
+            }
+        }
+        fileTree(dir: 'build/drivers').include('*.zip').each { myFile ->
+            copy {
+                println "Processing ${myFile.name}"
+                def name = myFile.name - '.zip'
+                from zipTree("build/drivers/${myFile.name}")
+                into "drivers/${name}"
+            }
+        }
+    }
+}

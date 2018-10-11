@@ -20,3 +20,4 @@ drivers/
 *.iml
 *.iws
 *.ipr
+out/
