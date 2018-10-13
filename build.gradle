@@ -26,18 +26,18 @@ clean.doFirst {
 }
 
 task downloadDrivers(type: Download) {
-    src ([  'https://github.com/mozilla/geckodriver/releases/download/v0.23.0/geckodriver-v0.23.0-win64.zip',
-            'https://github.com/mozilla/geckodriver/releases/download/v0.23.0/geckodriver-v0.23.0-linux64.tar.gz',
-            'https://github.com/mozilla/geckodriver/releases/download/v0.23.0/geckodriver-v0.23.0-macos.tar.gz',
-            'https://chromedriver.storage.googleapis.com/2.42/chromedriver_win32.zip',
-            'https://chromedriver.storage.googleapis.com/2.42/chromedriver_linux64.zip',
-            'https://chromedriver.storage.googleapis.com/2.42/chromedriver_mac64.zip'
+    src ([  "https://github.com/mozilla/geckodriver/releases/download/$gekodriver_version/geckodriver-$gekodriver_version-win64.zip",
+            "https://github.com/mozilla/geckodriver/releases/download/$gekodriver_version/geckodriver-$gekodriver_version-linux64.tar.gz",
+            "https://github.com/mozilla/geckodriver/releases/download/$gekodriver_version/geckodriver-$gekodriver_version-macos.tar.gz",
+            "https://chromedriver.storage.googleapis.com/$chromedriver_version/chromedriver_win32.zip",
+            "https://chromedriver.storage.googleapis.com/$chromedriver_version/chromedriver_linux64.zip",
+            "https://chromedriver.storage.googleapis.com/$chromedriver_version/chromedriver_mac64.zip"
     ])
     dest 'build/drivers'
     overwrite false
 }
 
-
+// unpack downloaded drivers to each corresponding location.
 task drivers {
     dependsOn downloadDrivers
     doLast{
@@ -57,5 +57,11 @@ task drivers {
                 into "drivers/${name}"
             }
         }
+    }
+}
+
+task showVersions {
+    doLast {
+        println "Show: Versions: $version | chromedriver: ${chromedriver_version} | gekodriver: ${gekodriver_version}"
     }
 }
