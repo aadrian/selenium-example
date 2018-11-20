@@ -36,16 +36,17 @@ public class App {
         System.out.println("App.processWithFirefox");
         Selenium selenium = new Selenium();
         WebDriver driver = selenium.initFirefox();
-        boolean navigated = selenium.step_navigate(driver);
-        boolean titled = selenium.step_check_title(driver);
+        boolean navigated = selenium.step_navigate(driver, "https://google.com");
+        boolean titled = selenium.step_check_title(driver, "Google");
         if(navigated && titled) { System.out.println(" ---> processWithFirefox successfully!"); }
     }
+
     public void processWithChrome() {
         System.out.println("App.processWithChrome");
         Selenium selenium = new Selenium();
         WebDriver driver = selenium.initChrome();
-        boolean navigated = selenium.step_navigate(driver);
-        boolean titled = selenium.step_check_title(driver);
+        boolean navigated = selenium.step_navigate(driver, "https://google.com");
+        boolean titled = selenium.step_check_title(driver, "Google");
         if(navigated && titled) { System.out.println(" ---> processWithChrome successfully!"); }
     }
 

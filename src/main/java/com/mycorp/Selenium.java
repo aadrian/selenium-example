@@ -59,15 +59,15 @@ public class Selenium {
         return new ChromeDriver();
     }
 
-    public boolean step_navigate(WebDriver driver) {
+    public boolean step_navigate(WebDriver driver, String url) {
         System.out.println("Selenium.step_navigate");
         // navigate to Google to test if it works ...
-        driver.get("https://google.com");
+        driver.get(url);
         return true;
     }
 
-    public boolean step_check_title(WebDriver driver) {
+    public boolean step_check_title(WebDriver driver, String title) {
         System.out.println("Selenium.step_check_title");
-        return driver.getTitle().toLowerCase().contains("Google");
+        return driver.getTitle().toLowerCase().contains(title);
     }
 }
