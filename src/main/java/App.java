@@ -32,6 +32,14 @@ public class App {
             } else if("cucumber".equals(args[0])) {
                 System.out.println(" ... Call Cucumber with parameters here ...");
 
+                String argv[] = new String[]{
+                        "--glue",
+                        "com.mycorp",
+                        "features"
+                };
+
+                byte exitStatus = cucumber.api.cli.Main.run(argv, Thread.currentThread().getContextClassLoader());
+                System.exit(exitStatus);
             } else {
                 System.out.println("---> Unsupported parameter '"+args[0]+"'!");
                 System.out.println(HELP);

@@ -17,7 +17,9 @@ gradle-app.setting
 
 .idea/
 drivers/
+features/
 *.iml
 *.iws
 *.ipr
 out/
+src/dist/*

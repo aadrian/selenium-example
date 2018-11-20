@@ -8,9 +8,9 @@ import org.openqa.selenium.WebDriver;
 import java.io.IOException;
 
 public class CucumberSteps {
-    static String APP_HOME;
-    WebDriver driver;
-    Selenium selenium;
+    static String APP_HOME; // use absolute paths
+    WebDriver driver;       // same driver used between steps
+    Selenium selenium;      // this might be static
 
     @Before
     public void init(){

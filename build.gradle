@@ -38,7 +38,7 @@ task downloadDrivers(type: Download) {
     overwrite false
 }
 
-// unpack downloaded drivers to each corresponding location.
+// unpack downloaded drivers to each corresponding package type.
 task drivers {
     dependsOn downloadDrivers
     doLast{
@@ -64,5 +64,38 @@ task drivers {
 task showVersions {
     doLast {
         println "Show: Versions: $version | chromedriver: ${chromedriver_version} | gekodriver: ${gekodriver_version}"
+    }
+}
+
+// cleanup dist extra files
+clean.doFirst {
+    delete fileTree(dir: '/src/dist/drivers', include: ['*'])
+    delete fileTree(dir: '/src/dist/features', include: ['*'])
+}
+
+// startScripts are called before buildZip and buildTar
+startScripts {
+    doLast {
+        println "Executing after startScripts"
+        copy {
+            from './'
+            include 'README.md'
+            into '/src/dist'
+        }
+        copy {
+            from 'src/main/resources/cucumber/'
+            include '*.feature'
+            into '/features/'
+        }
+        copy {
+            from 'src/main/resources/cucumber/'
+            include '*.feature'
+            into '/src/dist/features/'
+        }
+        copy {
+            from 'drivers/'
+            include '**/*'
+            into '/src/dist/drivers/'
+        }
     }
 }
