@@ -6,7 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class Selenium {
-    public WebDriver initFirefox() {
+    public WebDriver initFirefox(String appHome) {
         System.out.println("Selenium.initFirefox");
         // OS independent way of building the WebDriver path
         String driverName = "geckodriver";
@@ -27,7 +27,7 @@ public class Selenium {
             throw new RuntimeException("Unsupported OS");
         }
 
-        String driverFileName = "drivers/geckodriver-"+gekodriverVersion+"-"+os+"/"+driverName;
+        String driverFileName = appHome+"/drivers/geckodriver-"+gekodriverVersion+"-"+os+"/"+driverName;
         System.out.println("using driverFileName = " + driverFileName);
 
         // set the driver location
@@ -35,7 +35,7 @@ public class Selenium {
         return new FirefoxDriver();
     }
 
-    public WebDriver initChrome() {
+    public WebDriver initChrome(String appHome) {
         System.out.println("Selenium.initChrome");
         // OS independent way of building the WebDriver path
         String driverName = "chromedriver";
@@ -51,7 +51,7 @@ public class Selenium {
             throw new RuntimeException("Unsupported OS");
         }
 
-        String driverFileName = "drivers/chromedriver_"+os+"/"+driverName;
+        String driverFileName = appHome+"/drivers/chromedriver_"+os+"/"+driverName;
         System.out.println("using driverFileName = " + driverFileName);
 
         // set the driver location

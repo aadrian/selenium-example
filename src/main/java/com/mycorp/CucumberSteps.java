@@ -5,20 +5,29 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.*;
 import org.openqa.selenium.WebDriver;
 
+import java.io.IOException;
+
 public class CucumberSteps {
+    static String APP_HOME;
     WebDriver driver;
     Selenium selenium;
 
     @Before
     public void init(){
         selenium = new Selenium();
+        try {
+            APP_HOME = Utils.fixAppHome();
+        } catch (IOException e) {
+            // we can't continue, since the app home is not correct
+            throw new PendingException(e.getMessage());
+        }
     }
 
     // 1
     @Given("^Selenium Driver is initialized$")
     public void seleniumDriverIsInitialized() throws Throwable {
-        // driver = selenium.initFirefox();
-        driver = selenium.initChrome();
+        // driver = selenium.initFirefox(APP_HOME);
+        driver = selenium.initChrome(APP_HOME);
     }
 
     // 2
